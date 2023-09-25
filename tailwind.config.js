@@ -9,7 +9,7 @@ module.exports = {
     extend: {
       colors:{
         underlineDefault: 'rgba(0,0,0, 0.12)',
-        outline: '#3498db'
+        outline: '#2699E3'
       },
       fontFamily: {
         inter: ['var(--font-inter)'],

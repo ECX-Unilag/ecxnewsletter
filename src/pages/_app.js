@@ -1,11 +1,11 @@
 import '@/styles/globals.css'
-import { Inter, Varela } from 'next/font/google'
+import { Inter, Varela_Round } from 'next/font/google'
 
 const inter = Inter({ 
   subsets: ['latin'],
   variable: '--font-inter' ,
 })
-const varela= Varela({ 
+const varela= Varela_Round({ 
   subsets: ['latin'],
   weight: '400',
   variable: '--font-varela',
