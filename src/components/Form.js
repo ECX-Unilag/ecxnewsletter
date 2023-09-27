@@ -1,18 +1,10 @@
 import React, { useRef } from 'react'
 import { useFormik } from 'formik'
 import * as yup from "yup"
-import { useState } from 'react'
 import ErrorMessage from '@/components/ValidationStatus/ErrorMessage'
-import Succes from './FormStatus/Succes'
 import Error from './FormStatus/Error'
 
-
-const Form = () => {
-const [formStatus, setformStatus] = useState({
-  loading: false,
-  error:false,
-  success:false,
-})
+const Form = ({ success, errorOccured, processing, formStatus }) => {
 const nameref = useRef(null)
 const emailref = useRef(null)
 
@@ -28,61 +20,24 @@ const emailref = useRef(null)
 
   const content = await response.json()
   if(content){
-    setformStatus(prev => {
-      return {
-        ...prev,
-        loading:false
-      }
-    })
     const status = content.data?.status
     
     if(status === 200){
       //success
-      setformStatus(prev => {
-        return {
-          ...prev,
-          success: true,
-        }
-      })
+      success()
       formik.resetForm()
     }else{
-      setformStatus(prev => {
-        return {
-          ...prev,
-          error: true,
-        }
-      })
+      errorOccured()
     }
   }
  }
-
+// validation scheme
   const validateSchema = yup.object().shape({
     name: yup.string().required("This field is required"),
     email: yup.string().email('Invalid email').required('This field is required')
 })
 
-
-const formik = useFormik({
-  initialValues: {
-      name: '',
-      email: '',
-  },
-  validationSchema: validateSchema,
-  onSubmit: (values, { resetForm }) => {
-      setformStatus(prev => {
-        return {
-          ...prev,
-          error: false,
-          success: false,
-          loading: true
-        }
-      })
-      const formData = values
-      sendToGoogleSheet(formData)
-  },
-  validateOnChange:  false,
-})
-
+// focus on label click 
  function Focus(id){
     if(id === 'name'){
       nameref.current.focus()
@@ -92,10 +47,26 @@ const formik = useFormik({
  }
 
 
+const formik = useFormik({
+  initialValues: {
+      name: '',
+      email: '',
+  },
+  validationSchema: validateSchema,
+  onSubmit: (values) => {
+      processing()
+      const formData = values
+      sendToGoogleSheet(formData)
+  },
+  validateOnChange:  false,
+})
+
+
+
+
   return (
    <>
     {formStatus.error && <Error />}
-    {formStatus.success && <Succes />}
     <form className='mt-8' onSubmit={(e) => {e.preventDefault(); formik.handleSubmit(e)} } >
       <div className="inputDiv" >
         <input ref={nameref} value={formik.values.name} onChange={formik.handleChange} id='name' name='name'  type="text" className={`peer input placeholder-transparent ${formik.errors.name ? 'border-red-500' : ''} `}   placeholder='name' />
