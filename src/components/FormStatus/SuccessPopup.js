@@ -13,7 +13,7 @@ const SuccessPopup = ({display, close}) => {
   return (
     <div className={`${display ? 'flex' : 'hidden'}  fixed top-0 left-0 bg-black/30 w-screen h-screen  items-center justify-center`}>
      <div className='relative w-[85%] max-w-[400px] pb-8 bg-white shadow-lg flex flex-col rounded-md'>
-      <div className='w-fit ml-auto h-fit mt-1 mr-1' onClick={close}>
+      <div className='w-fit ml-auto h-fit mt-1 mr-1 cursor-pointer' onClick={close}>
        <FaXmark className='text-black text-[2rem]'/>
       </div>
       <div className='relative w-36 h-36 mx-auto mt-3'>

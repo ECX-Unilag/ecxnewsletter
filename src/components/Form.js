@@ -70,7 +70,7 @@ const formik = useFormik({
     <form className='mt-8 pb-6' onSubmit={(e) => {e.preventDefault(); formik.handleSubmit(e)} } >
       <div className="inputDiv" >
         <input ref={nameref} value={formik.values.name} onChange={formik.handleChange} id='name' name='name'  type="text" className={`peer input placeholder-transparent ${formik.errors.name ? 'border-red-500' : ''} `}   placeholder='name' />
-        <label  onClick={() => Focus('name')}  className='absolute bottom-2.5 text-gray-500 text-base transition-all duration-300 ease-in' >Name</label>
+        <label  onClick={() => Focus('name')}  className='absolute bottom-2.5 text-gray-500 text-base transition-all duration-300 ease-in' >Firstname</label>
         <div className="line"></div>
         { formik.errors.name && <ErrorMessage message={formik.errors.name} /> }
       </div>
